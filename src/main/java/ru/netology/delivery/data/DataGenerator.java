@@ -15,31 +15,33 @@ public class DataGenerator {
     public static String generateDate(int shift) {
          return LocalDate.now()
                         .plusDays(shift)
-                        .format(DateTimeFormatter.ofPattern(pattern));
+                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         // Вы можете использовать класс LocalDate и его методы для получения и форматирования даты
 
     }
 
     public static String generateCity(Faker faker) {
-        String city;
-        String city = faker.city("Москва", "Санкт-Петербург", "Краснодар", "Якутия");
+        String[] city = {"Москва", "Санкт-Петербург", "Краснодар", "Якутия"};
+        Random random = new Random();
         // TODO: добавить логику для объявления переменной city и задания её значения, генерацию можно выполнить
         // с помощью Faker, либо используя массив валидных городов и класс Random
-        return city;
+        return city[random.nextInt(city.length)];
     }
 
-    public static String generateName(Faker faker) {
-      String name = faker.name().fullName();
+    public static String generateName() {
+        Faker faker = new Faker(new Locale("ru"));
+      return faker.name().lastName() + " " + faker.name().firstName();
         // TODO: добавить логику для объявления переменной name и задания её значения, для генерации можно
         // использовать Faker
-        return name;
+        
     }
 
-    public static String generatePhone(Faker faker) {
-        String phone = faker.phoneNumber().phoneNumber();
+    public static String generatePhone() {
+        Faker faker = new Faker(new Locale("ru"));
+        return faker.phoneNumber().phoneNumber();
         // TODO: добавить логику для объявления переменной phone и задания её значения, для генерации можно
         // использовать Faker
-        return phone;
+
     }
 
     public static class Registration {
@@ -49,10 +51,13 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            faker = new Faker(new Locale(locale));
+            Faker faker = new Faker(new Locale("ru"));
+            String city = generateCity(faker);
+            String name = faker.name().fullName();
+            String phone = faker.phoneNumber().phoneNumber();
             // TODO: добавить логику для создания пользователя user с использованием методов generateCity(faker),
             // generateName(faker), generatePhone(faker)
-            return user;
+            return new UserInfo(city, name, phone);
         }
     }
 
