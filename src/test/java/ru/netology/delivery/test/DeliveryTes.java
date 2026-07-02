@@ -11,8 +11,7 @@ import ru.netology.delivery.data.DataGenerator;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static ru.netology.delivery.data.DataGenerator.*;
 
 class DeliveryTest {
@@ -36,11 +35,11 @@ class DeliveryTest {
                 .press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE)
                 .setValue(planningDate);
         $("[data-test-id='name'] input").setValue(generateName());
-        $("[data-test-id='phone'] input").setValue(generatePhone());
+        $("[data-test-id='phone'] input").setValue(validUser.getPhone());
         $("[data-test-id='agreement']").click();
         $(Selectors.withText("Запланировать")).click();
         $(".notification__content")
-                .should(Condition.visible, Duration.ofSeconds(15))
+                .should(Condition.visible, Duration.ofSeconds(10))
                 .should(Condition.text(" Встреча успешно запланирована на " + planningDate));
         // TODO: добавить логику теста в рамках которого будет выполнено планирование и перепланирование встречи.
         // Для заполнения полей формы можно использовать пользователя validUser и строки с датами в переменных
