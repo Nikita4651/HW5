@@ -28,16 +28,16 @@ public class DataGenerator {
         return city[random.nextInt(city.length)];
     }
 
-    public static String generateName() {
-        Faker faker = new Faker(new Locale("ru"));
+    public static String generateName(Faker faker) {
+
       return faker.name().lastName() + " " + faker.name().firstName();
         // TODO: добавить логику для объявления переменной name и задания её значения, для генерации можно
         // использовать Faker
         
     }
 
-    public static String generatePhone() {
-        Faker faker = new Faker(new Locale("ru"));
+    public static String generatePhone(Faker faker) {
+
         return faker.phoneNumber().phoneNumber();
         // TODO: добавить логику для объявления переменной phone и задания её значения, для генерации можно
         // использовать Faker
@@ -51,13 +51,11 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            Faker faker = new Faker(new Locale("ru"));
-            String city = generateCity(faker);
-            String name = faker.name().fullName();
-            String phone = faker.phoneNumber().phoneNumber();
+            Faker faker = new Faker(new Locale(locale));
+            return new UserInfo(generateCity(faker), generateName(faker), generatePhone(faker));
             // TODO: добавить логику для создания пользователя user с использованием методов generateCity(faker),
             // generateName(faker), generatePhone(faker)
-            return new UserInfo(city, name, phone);
+
         }
     }
 
